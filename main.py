@@ -1,6 +1,11 @@
 from flask import Flask, render_template
+import json
 
 app = Flask(__name__)
+
+customers = [{'id': 1, 'name': 'danny', 'address': 'tel-aviv'},
+             {'id': 2, 'name': 'marina', 'address': 'beer-sheva'},
+             {'id': 3, 'name': 'david', 'address': 'herzeliya'}]
 
 # localhost:5000/
 # static page
@@ -22,11 +27,14 @@ def ajax():
 
 @app.route('/customers', methods = ['GET'])    
 def get_customers():
-    return '[{"id" : 1, "name": "danny"}, {"id": 2, "name": "moshe"}]'
+    return json.dumps(customers)
 
-@app.route('/customers/1', methods = ['GET'])    
+@app.route('/customers/<int:id>', methods = ['GET'])
 def get_customer_by_id():
-    return '{"id" : 1, "name": "danny"}'    
+    for c in customers:
+        if c["id"] == id:
+            return json.dumps(c)
+    return '{}'
 
 app.run()
 
