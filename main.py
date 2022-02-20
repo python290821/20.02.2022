@@ -30,7 +30,7 @@ def get_customers():
     return json.dumps(customers)
 
 @app.route('/customers/<int:id>', methods = ['GET'])
-def get_customer_by_id():
+def get_customer_by_id(id):
     for c in customers:
         if c["id"] == id:
             return json.dumps(c)
